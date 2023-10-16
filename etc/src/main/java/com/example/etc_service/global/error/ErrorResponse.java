@@ -3,6 +3,7 @@ package com.example.etc_service.global.error;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
     private String message;
-    private int status;
+    private HttpStatus status;
     private List<FieldError> errors;
     private String code;
 
@@ -57,17 +58,17 @@ public class ErrorResponse {
     public static class FieldError {
         private String field;
         private String value;
-        private String reason;
+        private String message;
 
-        private FieldError(final String field, final String value, final String reason) {
+        private FieldError(final String field, final String value, final String message) {
             this.field = field;
             this.value = value;
-            this.reason = reason;
+            this.message = message;
         }
 
-        public static List<FieldError> of(final String field, final String value, final String reason) {
+        public static List<FieldError> of(final String field, final String value, final String message) {
             List<FieldError> fieldErrors = new ArrayList<>();
-            fieldErrors.add(new FieldError(field, value, reason));
+            fieldErrors.add(new FieldError(field, value, message));
             return fieldErrors;
         }
 

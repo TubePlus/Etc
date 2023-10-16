@@ -7,6 +7,7 @@ import com.example.etc_service.warning.application.ports.out.dto.WarningDto;
 import com.example.etc_service.warning.domain.WarningType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 public interface WarningUseCase {
 //    1. request를 dto로 변환시켜준다.
@@ -14,6 +15,7 @@ public interface WarningUseCase {
     WarningDto saveWarningUsers(SaveWarningQuery saveWarningQuery);
     WarningDto saveWarningBoards(SaveWarningQuery saveWarningQuery);
     @Getter
+    @ToString
     @Builder
     class SaveWarningQuery {
         private Long warningProvider;
