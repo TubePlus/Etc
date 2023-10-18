@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image for my project
-      run: docker build -file ./etc/Dockerfile --tag 7eom14/tubeplus-etc:latest .
+      run: docker build . --file ./etc/Dockerfile --tag 7eom14/tubeplus-etc:latest
 
     - name: Login to DockerHub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
