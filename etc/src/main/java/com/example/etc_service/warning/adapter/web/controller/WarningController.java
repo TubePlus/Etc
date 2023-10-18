@@ -5,6 +5,8 @@ import com.example.etc_service.warning.adapter.web.request.RequestReportBoards;
 import com.example.etc_service.warning.adapter.web.request.RequestReportCommunity;
 import com.example.etc_service.warning.adapter.web.request.RequestReportUsers;
 import com.example.etc_service.warning.application.ports.in.WarningUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class WarningController {
 
     private final WarningUseCase warningUseCase;
-
+    @Operation(summary = "welcome", description = "welcome api example")
     @GetMapping("/welcome")
 //    gateway test용
     public String welcome() {
