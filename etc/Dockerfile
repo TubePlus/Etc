@@ -9,7 +9,7 @@
 
 FROM openjdk:17-alpine
 COPY ${JAR_FILE} app.jar
-CMD ["java", "-jar", "app.jar"]
+CMD ["java","-Duser.timezone=Asia/Seoul", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
 
 
 #FROM openjdk:17-alpine
