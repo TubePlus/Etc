@@ -6,44 +6,53 @@ on:
   pull_request:
     branches: [ "develop" ]
 
-#env:
-#  AWS_REGION: ap-northeast-2
-#  S3_BUCKET_NAME: my-github-actions-s3-bucket
-#  CODE_DEPLOY_APPLICATION_NAME: my-codedeploy-app
-#  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: my-codedeploy-deployment-group
-#
-#permissions:
-#  contents: read
+env:
+  IMAGE_TAG: dev-1
+
 jobs:
-  build-docker-image:
+
+  docker_build_and_push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      # 1. Java 17 세팅
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
 
-      # 2. Spring Boot 애플리케이션 빌드
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-        with:
-          arguments: clean bootJar
+      - name: QEMU 설정
+        uses: docker/setup-qemu-action@v1
 
-      # 3. Docker 이미지 빌드
-      - name: docker image build
-        run: docker build . --file ./etc/Dockerfile --tag 7eom14/tubeplus-etc:latest
+      - name: Docker Buildx 설정
+        uses: docker/setup-buildx-action@v1
 
-      # 4. DockerHub 로그인
-      - name: docker login
-        uses: docker/login-action@v2
+      - name: DockerHub에 로그인
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 5. Docker Hub 이미지 푸시
-      - name: docker Hub push
-        run: docker push 7eom14/tubeplus-etc:latest
+      - name: 빌드 및 푸쉬
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: 7eom14/tubeplus-etc:${{ env.IMAGE_TAG }}
+          platforms: linux/amd64
+          build-args:
+            COLOR=${{ env.IMAGE_TAG }}
+
+#  deploy:
+#    needs: docker_build_and_push
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: 코드 체크아웃
+#        uses: actions/checkout@v2
+#
+#      - name: values.yaml 수정 및 푸쉬
+#        run: |
+#          git config user.email "7eom14@gmail.com"
+#          git config user.name "tubeplus"
+#          sed -i 's/tag:.*$/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
+#          git add ./helm-charts/values.yaml
+#          git commit -m 'BE-USER CI/CD Pipeline Job'
+#          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/moA-meetingPlatform/BE-MEETING.git
+#          git push -u origin develop
 
