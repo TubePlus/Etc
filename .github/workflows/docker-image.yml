@@ -32,7 +32,8 @@ jobs:
       - name: 빌드 및 푸쉬
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./etc
+          file: ./etc/Dockerfile
           push: true
           tags: 7eom14/tubeplus-etc:${{ env.IMAGE_TAG }}
           platforms: linux/amd64
