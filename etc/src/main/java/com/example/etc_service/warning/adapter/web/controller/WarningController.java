@@ -5,6 +5,7 @@ import com.example.etc_service.warning.adapter.web.request.RequestReportBoards;
 import com.example.etc_service.warning.adapter.web.request.RequestReportCommunity;
 import com.example.etc_service.warning.adapter.web.request.RequestReportUsers;
 import com.example.etc_service.warning.application.ports.in.WarningUseCase;
+import com.example.etc_service.warning.application.ports.out.dto.WarningDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -33,6 +34,7 @@ public class WarningController {
 //        log.info("reportCommunity query : "+String.valueOf(WarningUseCase.SaveWarningQuery.toQeury(reportCommunity)));
 //        useCase를 통해 port로 전달하는데까지
         warningUseCase.saveWarningCommunity(WarningUseCase.SaveWarningQuery.toQeury(reportCommunity));
+
         return ApiResponse.ofSuccess();
     }
     @PostMapping("/reports/uesrs")
