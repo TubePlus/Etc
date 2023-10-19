@@ -7,11 +7,6 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootJAR
 
-#FROM openjdk:17-alpine
-#ARG JAR_FILE=build/libs/*.jar
-#COPY ${JAR_FILE} app.jar
-#CMD ["java","-Duser.timezone=Asia/Seoul", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
-
 FROM openjdk:17-alpine
 COPY --from=builder build/libs/*.jar app.jar
 EXPOSE 8004
