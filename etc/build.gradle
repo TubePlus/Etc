@@ -65,5 +65,5 @@ tasks.named('test') {
 }
 
 clean {
-	delete file('src/main/generated')
+	delete file('projectDir/build/generated')
 }
