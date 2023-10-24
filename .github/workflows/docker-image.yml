@@ -40,20 +40,20 @@ jobs:
           build-args:
             COLOR=${{ env.IMAGE_TAG }}
 
-#  deploy:
-#    needs: docker_build_and_push
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: 코드 체크아웃
-#        uses: actions/checkout@v2
-#
-#      - name: values.yaml 수정 및 푸쉬
-#        run: |
-#          git config user.email "7eom14@gmail.com"
-#          git config user.name "tubeplus"
-#          sed -i 's/tag:.*$/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
-#          git add ./helm-charts/values.yaml
-#          git commit -m 'BE-USER CI/CD Pipeline Job'
-#          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/moA-meetingPlatform/BE-MEETING.git
-#          git push -u origin develop
+  deploy:
+    needs: docker_build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
+
+      - name: values.yaml 수정 및 푸쉬
+        run: |
+          git config user.email "7eom14@gmail.com"
+          git config user.name "tubeplus"
+          sed -i 's/tag:.*$/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
+          git add ./helm-charts/values.yaml
+          git commit -m 'BE-USER CI/CD Pipeline Job'
+          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}github.com:TubePlus/Etc.git
+          git push -u origin develop
 
