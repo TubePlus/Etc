@@ -44,10 +44,12 @@ spec:
             httpGet:
               path: /actuator/health
               port: http
+            initailDelaySeconds: 30
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: http
+            initailDelaySeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
