@@ -55,7 +55,7 @@ ingress:
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/subnets: subnet-03ec83b839d4ead0e, subnet-0e8c7578758cf9281
   hosts:
-    - host: ""
+    - host: "tubeplus.com"
       paths:
         - path: /api/v1/etc
           pathType: Prefix
