@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: 7eom14/tubeplus-etc
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: dev-1
