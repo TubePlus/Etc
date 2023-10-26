@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
   # pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: dev-1
+  tag: dev-2
 
 container:
   port: 80
@@ -29,7 +29,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations: {} # 메타 데이터에 추가될 어노테이션을 정의 모니터링, 로깅, 라이프 사이클 등
 podLabels: {}
 
 podSecurityContext: {}
@@ -79,7 +79,7 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
+autoscaling: # auto scaling size 개수 true로 변경해야 늘어난다.
   enabled: false
   minReplicas: 1
   maxReplicas: 100
