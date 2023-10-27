@@ -40,16 +40,22 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
+          livenessProbe: # 응답실패 3번이면 restart
             httpGet:
               path: /actuator/health
               port: http
             initailDelaySeconds: 30
-          readinessProbe:
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe: # 파드 생성했지만 컨테이너 준비 안된경우
             httpGet:
               path: /actuator/health
               port: http
             initailDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}

@@ -48,14 +48,14 @@ service:
   port: 80
 
 ingress:
-  enabled: true
-  className: alb
+  enabled: false
+  className: nginx
   annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/subnets: subnet-03ec83b839d4ead0e, subnet-0e8c7578758cf9281
   hosts:
-    - host: "tubeplus.com"
+    - host: tubeplus.online
       paths:
         - path: /api/v1/etc
           pathType: Prefix
@@ -85,6 +85,7 @@ autoscaling: # auto scaling size 개수 true로 변경해야 늘어난다.
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+  
 
 # Additional volumes on the output Deployment definition.
 volumes: []
