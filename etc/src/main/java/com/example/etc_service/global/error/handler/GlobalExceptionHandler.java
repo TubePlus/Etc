@@ -3,6 +3,7 @@ package com.example.etc_service.global.error.handler;
 import com.example.etc_service.global.error.ErrorCode;
 import com.example.etc_service.global.error.ErrorResponse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * youtube 영상 json 파싱 에러
+     */
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<ErrorResponse> handleJsonProcessingException(JsonProcessingException e) {
+        log.error("fail to youtube parsing error, {}", e.getMessage());
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.BAD_PARSING);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {

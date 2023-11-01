@@ -51,4 +51,24 @@ public class WarningController {
         warningUseCase.saveWarningBoards(WarningUseCase.SaveWarningQuery.toQeury(requestReportBoards));
         return ApiResponse.ofSuccess();
     }
+    @Operation(summary = "신고 확인 하기(관리자용)", description = "관리자가 신고 내역을 확인하기")
+    @GetMapping("/reports/read/{warning_id}")
+    public ApiResponse<WarningDto> getWarning(@RequestParam("warning_id") Long warningId) {
+        log.info(String.valueOf("warningID : " + warningId));
+//        return ApiResponse.ofSuccess(warningUseCase.findWarning(warningId));
+        return ApiResponse.ofSuccess();
+    }
+    @Operation(summary = "신고 내역 리스트", description = "신고 내역 리스트 관리자가 type에 맞게 확인")
+    @GetMapping("/reports/read")
+    public ApiResponse<?> getWarningList() {
+        log.info("readWarningList");
+        return ApiResponse.ofSuccess();
+    }
+
+    @Operation(summary = "신고 읽음 처리하기", description = "신고 내역 리스트를 관리자가 신고를 읽음 처리한다.")
+    @PutMapping("/reports/read")
+    public ApiResponse<?> readWarningList() {
+        log.info("readWarningList");
+        return ApiResponse.ofSuccess();
+    }
 }

@@ -31,8 +31,9 @@ dependencies {
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//	webclient 기능 추가
+	implementation 'org.springframework.boot:spring-boot-starter-webflux:3.1.2'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -67,5 +68,5 @@ tasks.named('test') {
 }
 
 clean {
-	delete file('/build/generated')
+	delete file('*/build/generated')
 }

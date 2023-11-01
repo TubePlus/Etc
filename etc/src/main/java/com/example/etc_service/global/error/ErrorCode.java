@@ -13,6 +13,7 @@ public enum ErrorCode {
     ENTITY_SAVE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "C005", "db 저장 실패"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "C006", "잘못된 요청입니다."),
     INVALID_TYPE_VALUE(HttpStatus.NOT_FOUND, "C007", " Invalid Type Value"),
+    BAD_PARSING(HttpStatus.BAD_REQUEST, "C008", "잘못된 파싱입니다"),
 
     /*로그인*/
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "L001", "로그인이 필요합니다."),

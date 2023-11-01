@@ -14,6 +14,8 @@ public interface WarningUseCase {
     WarningDto saveWarningCommunity(SaveWarningQuery saveWarningQuery);
     WarningDto saveWarningUsers(SaveWarningQuery saveWarningQuery);
     WarningDto saveWarningBoards(SaveWarningQuery saveWarningQuery);
+
+
     @Getter
     @ToString
     @Builder
