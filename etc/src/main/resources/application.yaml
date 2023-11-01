@@ -2,6 +2,15 @@ server:
   port: 0
   shutdown: graceful
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+
 spring:
   profiles:
     active: local,secret
@@ -34,14 +43,14 @@ springdoc:
   default-produces-media-type: application/json
   paths-to-match:
     - /api/v1/etc/**
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-    health:
-      show-details: always
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info
+#    health:
+#      show-details: always
 
 
 #  data:
