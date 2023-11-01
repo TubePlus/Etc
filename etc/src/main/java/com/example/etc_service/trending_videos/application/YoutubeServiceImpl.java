@@ -28,8 +28,6 @@ public class YoutubeServiceImpl implements YoutubeService{
 
     @Override
     public List<GetTrendingVideoDto> getTrendingVideos() throws JsonProcessingException {
-        System.out.println("------------------------------------------");
-        System.out.println(env.getProperty("YOUTUBE.API_KEY"));
         Pattern pattern = Pattern.compile("//(www\\.youtube\\.com\\/embed\\/[a-zA-Z0-9_-]+)");
         String partValues =
                 "contentDetails,id,liveStreamingDetails,player,snippet,statistics,status,topicDetails";
@@ -38,9 +36,8 @@ public class YoutubeServiceImpl implements YoutubeService{
                         .path("/videos")
                         .queryParam("part", partValues)
                         .queryParam("chart", "mostPopular")
-                        .queryParam("maxResults", "20")
+                        .queryParam("maxResults", "50")
                         .queryParam("regionCode", "kr")
-//                        .queryParam("key", "AIzaSyDj6FZgw1SUpuyhucDN79hMaDrB-sHUgQE")
                         .queryParam("key",env.getProperty("YOUTUBE.API_KEY"))
                         .build()
                 )
