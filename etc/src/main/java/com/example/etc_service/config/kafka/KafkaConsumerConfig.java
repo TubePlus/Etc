@@ -28,13 +28,6 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public NewTopic topic() {
-        return TopicBuilder.name("test")
-                .partitions(1)
-                .replicas(1)
-                .build();
-    }
-    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         // kafka listener container factory
         ConcurrentKafkaListenerContainerFactory<String, String>
