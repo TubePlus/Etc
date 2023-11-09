@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor // 프록시때문에 만드는 것
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder

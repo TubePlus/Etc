@@ -1,4 +1,4 @@
-package com.example.etc_service.trending_videos.application.response;
+package com.example.etc_service.trending_videos.dto.response;
 
 import com.example.etc_service.trending_videos.domain.CategoryType;
 import lombok.*;
