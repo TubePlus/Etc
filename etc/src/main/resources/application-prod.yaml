@@ -4,6 +4,10 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
 #    master:
 #      hikari:
 #        jdbc-url: jdbc:mysql://34.64.70.212:3307/ssgpoint
