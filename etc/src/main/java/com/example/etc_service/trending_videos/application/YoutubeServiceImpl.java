@@ -1,7 +1,7 @@
 package com.example.etc_service.trending_videos.application;
 
 
-import com.example.etc_service.trending_videos.application.response.GetTrendingVideoDto;
+import com.example.etc_service.trending_videos.dto.response.GetTrendingVideoDto;
 import com.example.etc_service.trending_videos.domain.CategoryTypeConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -47,6 +47,8 @@ public class YoutubeServiceImpl implements YoutubeService{
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode itemsNode = objectMapper.readTree(response).get("items");
         List<GetTrendingVideoDto> trendingVideos = new ArrayList<>();
+// 밑에 코드를 stream으로 바꾸기
+
 
         for (int i = 0; i < itemsNode.size(); i++) {
             JsonNode videoNode = itemsNode.get(i);
@@ -57,7 +59,6 @@ public class YoutubeServiceImpl implements YoutubeService{
             if (videoMatcher.find()) {
                 videoDto.setVideoUrl(videoMatcher.group(1)); // 첫 번째 캡쳐 그룹에 일치하는 부분 반환
             }
-
             videoDto.setVideoTitle(videoNode.get("snippet").get("title").asText());
             videoDto.setRanking((long) i + 1);
             videoDto.setVideoCategory(new CategoryTypeConverter().convertToEntityAttribute(videoNode.get("snippet").get("categoryId").asLong()));
