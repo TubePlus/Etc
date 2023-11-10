@@ -15,7 +15,8 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class KafkaConsumer {
-    @KafkaListener(topics = "test")
+
+    @KafkaListener(topics = "test", groupId = "etc-service")
     public void processMessage(String kafkaMessage){
         log.info("kafka message received =====> " + kafkaMessage);
 
@@ -26,7 +27,6 @@ public class KafkaConsumer {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        log.info("kafka message used =====> " + map);
         // 저장할 때 Object Type이라서 String으로 변환해서 저장해야함
 //        repository.findById((String)map.get(id))
     }
