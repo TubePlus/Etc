@@ -20,7 +20,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<String, String> consumerFactory(){
         Map<String, Object> properties = new HashMap<>();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092"); // kafka container host
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "34.64.149.128:9092"); // kafka container host
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "etc-service"); // consumer group id 그룹으로 지정해서 보내기 가능
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); // key deserializer
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class); // value deserializer
