@@ -21,31 +21,19 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
+
     @Value("${spring.consumers.bootstrap-servers}")
     private String bootstrapServers;
-    @Bean
-    public KafkaAdmin kafkaAdmin() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        return new KafkaAdmin(configs);
-    }
-    @Bean
-    public ConsumerFactory<String, String> consumerFactory(){
-        Map<String, Object> properties = new HashMap<>();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers); // kafka container host
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "etc-service"); // consumer group id 그룹으로 지정해서 보내기 가능
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); // key deserializer
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class); // value deserializer
-        return new DefaultKafkaConsumerFactory<>(properties);
-    }
 
     @Bean
-    public NewTopic topic() {
-        return TopicBuilder.name("test")
-                .partitions(1)
-                .replicas(1)
-                .build();
+    public ConsumerFactory<String, String> consumerFactory(){
+        Map<String, Object> config = new HashMap<>();
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers); // kafka container host
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); // key deserializer
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class); // value deserializer
+        return new DefaultKafkaConsumerFactory<>(config);
     }
+
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         // kafka listener container factory
