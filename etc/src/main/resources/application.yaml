@@ -12,6 +12,8 @@ server:
 #      enabled: true
 
 spring:
+  consumers:
+    bootstrap-servers: plaintext://localhost:9092,plaintext://localhost:9093,plaintext://localhost:9094
   profiles:
     active: local,secret
   application:
@@ -43,7 +45,6 @@ springdoc:
   default-produces-media-type: application/json
   paths-to-match:
     - /api/v1/etc/**
-
 
 
 #  data:
