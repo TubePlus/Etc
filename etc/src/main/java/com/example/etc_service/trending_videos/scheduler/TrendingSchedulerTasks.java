@@ -21,9 +21,7 @@ public class TrendingSchedulerTasks {
         // 삭제하기 코드 or redis
         System.out.println("executeTrendingVideos");
         try {
-            List<GetTrendingVideoDto> youtubeVideos = youtubeService.getTrendingVideos();
-            trendingVideoService.saveTrendingVideosz(youtubeVideos);
-            log.info(youtubeVideos.toString());
+            youtubeService.getTrendingVideos();
         } catch (Exception e) {
             log.error("Error executing trending videos task", e);
         }
