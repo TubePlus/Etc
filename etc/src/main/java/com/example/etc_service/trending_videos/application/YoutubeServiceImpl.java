@@ -9,11 +9,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,9 +32,15 @@ import java.util.regex.Pattern;
 public class YoutubeServiceImpl implements YoutubeService{
     private final WebClient webClient;
     private final Environment env;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public List<GetTrendingVideoDto> getTrendingVideos() throws JsonProcessingException {
+//    @CachePut(value = "trendingVideos", key = "'trendingVideos:' + T(java.time.LocalDate).now().toString()",
+//            cacheManager = "redisCacheManager")
+    public void getTrendingVideos() throws JsonProcessingException {
+
+        ListOperations<String, Object> redisListOperations = redisTemplate.opsForList();
+
         Pattern pattern = Pattern.compile("//(www\\.youtube\\.com\\/embed\\/[a-zA-Z0-9_-]+)");
         String partValues =
                 "contentDetails,id,liveStreamingDetails,player,snippet,statistics,status,topicDetails";
@@ -46,28 +59,29 @@ public class YoutubeServiceImpl implements YoutubeService{
                 .block();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode itemsNode = objectMapper.readTree(response).get("items");
-        List<GetTrendingVideoDto> trendingVideos = new ArrayList<>();
-// 밑에 코드를 stream으로 바꾸기
+//        List<GetTrendingVideoDto> trendingVideos = new ArrayList<>();
 
 
-        for (int i = 0; i < itemsNode.size(); i++) {
-            JsonNode videoNode = itemsNode.get(i);
+        // 밑에 코드를 stream으로 바꾸기
+        int ranking = 0;
+        for (JsonNode item : itemsNode) {
             GetTrendingVideoDto videoDto = new GetTrendingVideoDto();
+            ranking++;
             // videoUrl에서 YouTube 동영상 URL 추출
-            String videoHtml = videoNode.get("player").get("embedHtml").asText();
+            String videoHtml = item.get("player").get("embedHtml").asText();
             Matcher videoMatcher = pattern.matcher(videoHtml);
             if (videoMatcher.find()) {
                 videoDto.setVideoUrl(videoMatcher.group(1)); // 첫 번째 캡쳐 그룹에 일치하는 부분 반환
             }
-            videoDto.setVideoTitle(videoNode.get("snippet").get("title").asText());
-            videoDto.setRanking((long) i + 1);
-            videoDto.setVideoCategory(new CategoryTypeConverter().convertToEntityAttribute(videoNode.get("snippet").get("categoryId").asLong()));
-            videoDto.setThumbnailUrl(videoNode.get("snippet").get("thumbnails").get("standard").get("url").asText());
-            videoDto.setChannelName(videoNode.get("snippet").get("channelTitle").asText());
-            videoDto.setChannelId(videoNode.get("id").asText());
-            trendingVideos.add(videoDto);
-        }
+            videoDto.setVideoTitle(item.get("snippet").get("title").asText());
+            videoDto.setRanking((long) ranking);
+            videoDto.setVideoCategory(new CategoryTypeConverter().convertToEntityAttribute(item.get("snippet").get("categoryId").asLong()));
+            videoDto.setThumbnailUrl(item.get("snippet").get("thumbnails").get("standard").get("url").asText());
+            videoDto.setChannelName(item.get("snippet").get("channelTitle").asText());
+            videoDto.setChannelId(item.get("id").asText());
 
-        return trendingVideos;
+            // 레디스 캐시에 저장
+            redisListOperations.rightPush("trendingVideos:" + LocalDate.now().toString(), videoDto);
+        }
     }
 }
