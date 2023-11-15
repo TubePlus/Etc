@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/etc")
 public class TrendingVideoController {
     private final TrendingVideoService trendingVideoService;
