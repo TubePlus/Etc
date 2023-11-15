@@ -6,5 +6,5 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 
 public interface YoutubeService {
-    List<GetTrendingVideoDto> getTrendingVideos() throws JsonProcessingException;
+    void getTrendingVideos() throws JsonProcessingException;
 }
