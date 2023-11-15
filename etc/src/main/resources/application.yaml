@@ -29,7 +29,7 @@ spring:
       dialect: org.hibernate.dialect.MySQL5Dialect
     open-in-view: true # false 할지 조원과 상의
   consumers:
-    bootstrap-servers: plaintext://localhost:9092,plaintext://localhost:9093,plaintext://localhost:9094
+    bootstrap-servers: plaintext://kafka1:9092,plaintext://kafka2:9092,plaintext://kafka3:9092
 
 springdoc:
   swagger-ui:
