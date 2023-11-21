@@ -3,7 +3,7 @@ package com.example.etc_service.config.kafka;
 
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
+//import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.config.TopicBuilder;
+//import org.springframework.kafka.config.KafkaStreamsConfiguration;
+//import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaAdmin;
@@ -36,6 +37,7 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers); // kafka container host
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); // key deserializer
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class); // value deserializer
+//        config.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000"); // auto commit interval
         return new DefaultKafkaConsumerFactory<>(config);
     }
 
@@ -49,4 +51,13 @@ public class KafkaConsumerConfig {
         // kafkalistnerContainerFactory.setConcurrency(3); // concurrency
         return kafkaListenerContainerFactory;
     }
+
+//    @Bean(name = KafkaStreamsDefulatConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
+//    public KafkaStreamsConfiguration kStreamsConfigs() {
+//        Map<String, Object> props = new HashMap<>();
+//        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-streams");
+//        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+//        return new KafkaStreamsConfiguration(props);
+//    }
 }

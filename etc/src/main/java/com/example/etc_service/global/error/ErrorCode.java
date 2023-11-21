@@ -35,7 +35,8 @@ public enum ErrorCode {
     /*sms message*/
     EXTERNAL_NCP_SERVER_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "F001", "인증번호 발송에 실패하였습니다"),
     CERT_CODE_EXPIRED(HttpStatus.BAD_REQUEST, "F002", "인증번호가 만료되었습니다"),
-    CERT_CODE_INVALID(HttpStatus.BAD_REQUEST, "F002", "인증번호가 유효하지 않습니다");
+    CERT_CODE_INVALID(HttpStatus.BAD_REQUEST, "F002", "인증번호가 유효하지 않습니다"),
+    NO_ENTITY_ALARM(HttpStatus.NO_CONTENT, "F003", "읽을 알람이 존재하지 않습니다.");
 
 
     private final HttpStatus status;
