@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ import java.util.regex.Pattern;
 @Slf4j
 @ToString
 @RequiredArgsConstructor
+@Transactional(readOnly = false)
 public class YoutubeServiceImpl implements YoutubeService{
     private final WebClient webClient;
     private final Environment env;

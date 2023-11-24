@@ -22,6 +22,7 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = false)
 public class KafkaConsumer {
     private final SseService sseService;
     private final AlarmService alarmService;

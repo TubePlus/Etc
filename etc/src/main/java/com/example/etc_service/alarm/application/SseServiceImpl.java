@@ -3,13 +3,14 @@ package com.example.etc_service.alarm.application;
 import com.example.etc_service.alarm.dto.AlarmDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-
+@Transactional(readOnly = false)
 @Service
 public class SseServiceImpl implements SseService {
     private final Map<String, List<SseEmitter>> emittersByUUID = new ConcurrentHashMap<>();

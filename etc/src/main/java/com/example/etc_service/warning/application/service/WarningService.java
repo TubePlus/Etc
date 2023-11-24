@@ -6,9 +6,11 @@ import com.example.etc_service.warning.application.ports.out.port.WarningPort;
 import com.example.etc_service.warning.domain.Warning;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = false)
 public class WarningService implements WarningUseCase {
     private final WarningPort warningPort;
     @Override

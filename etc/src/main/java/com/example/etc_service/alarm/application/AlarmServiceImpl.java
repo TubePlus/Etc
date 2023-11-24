@@ -8,12 +8,14 @@ import com.example.etc_service.global.error.ErrorCode;
 import com.example.etc_service.global.error.handler.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = false)
 public class AlarmServiceImpl implements AlarmService {
     private AlarmRepository alarmRepository;
     @Override
@@ -24,6 +26,7 @@ public class AlarmServiceImpl implements AlarmService {
         alarmRepository.save(alarm); // 명시적 저장
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Integer> getAlarmList(String uuid) {
         // uuid를 통해 data를 찾을때 읽지 않은것 만 가져오기
         return alarmRepository.findIdByUuidAndAlarmCheck(uuid, false);

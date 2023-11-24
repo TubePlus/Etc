@@ -10,12 +10,14 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = false)
 public class TrendingVideoServiceImpl implements TrendingVideoService {
 
     private final TrendingVideoRepository trendingVideoRepository;
@@ -25,6 +27,7 @@ public class TrendingVideoServiceImpl implements TrendingVideoService {
     @Override
 //    @Cacheable(value = "trendingVideos", key = "'trendingVideos:' + T(java.time.LocalDate).now().toString()",
 //            cacheManager = "redisCacheManager")
+    @Transactional(readOnly = true)
     public List<Object> getTrendingVideos() {
 
         ListOperations<String, Object> redisListOperations = redisTemplate.opsForList();
