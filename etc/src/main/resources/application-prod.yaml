@@ -13,7 +13,7 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
     slave:
       hikari:
-        jdbc-url: jdbc:mysql://34.64.220.235:3306/etc
+        jdbc-url: jdbc:mysql://34.64.254.7:3306/etc
         read-only: true
         username: ${MYSQL_NAME}
         password: ${MYSQL_PASSWORD}
