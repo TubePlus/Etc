@@ -29,7 +29,7 @@ public class JpaConfiguration {
                 "com.example.etc_service.agree.domain",
                 "com.example.etc_service.alarm.domain",
                 "com.example.etc_service.trending_videos.domain",
-                "com.example.etc_service.warning.domain"
+                "com.example.etc_service.warning.adapter.infrastructure.mysql.entity"
         );
         // JPA 벤더 어뎁터를 설정한다.
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
